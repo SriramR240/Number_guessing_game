@@ -1,4 +1,5 @@
 import random
+import time
 
 def get_random():
     return random.randint(1,100)
@@ -65,7 +66,7 @@ I'm thinking of a number between 1 and 100''')
         guess=None
         turns = 1
         hints = 3
-        
+        start = time.time()
         while turns<=chances:
             guess_or_hint = input("Enter your guess (int):").upper()
             
@@ -91,13 +92,15 @@ I'm thinking of a number between 1 and 100''')
                 continue
             
             if guess==answer:
+                end = time.time()
                 print(f"Congrats you have guessed the number in {turns} turns")
+                print(f"Total time passed:{end-start:.2f} seconds")
                 break
             
             print(f"Incorrect. You have {chances-turns} more chances")
             turns+=1
         else:
-            print(f"{answer} for the correct number")
+            print(f"{answer} was the correct number")
             print("You have run out of chances.Better luck next time")
             
             
