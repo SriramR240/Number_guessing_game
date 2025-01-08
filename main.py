@@ -1,10 +1,15 @@
 import random
 import time
+import csv
+
+CSV_FILE = 'highscore.csv'
+difficulty = None
 
 def get_random():
     return random.randint(1,100)
 
 def get_choice():
+    global difficulty
     chances=0
     while True:
         print('''
@@ -16,7 +21,6 @@ you have 3 hints.use them wisely
             ''')
              
         choice = input().lower()
-        difficulty = None
         
         match choice:
             case "1":
@@ -51,6 +55,38 @@ def get_hint(guess,answer):
         print(f"you are close,{guess} is greater than answer")
     else:
         print(f"You are far away,{guess} is way greater than answer")
+        
+
+
+def update_high_score(score: int, difficulty: str):
+    print(difficulty,score)
+    updated = False
+    rows = []
+    
+    # Read the current scores from the CSV
+    try:
+        with open(CSV_FILE, mode='r', newline='') as file:
+            reader = csv.DictReader(file)
+            rows = list(reader)
+    except FileNotFoundError:
+        print(f"File {CSV_FILE} not found")
+
+    # Check if the difficulty exists and update if necessary
+    for row in rows:
+        if row['difficulty'] == difficulty:
+            if int(row['score']) > score:
+                row['score'] = str(score)
+                print("New high score achieved!")
+                break
+    # Write back to the CSV
+    with open(CSV_FILE, mode='w', newline='') as file:
+        fieldnames = ['difficulty', 'score']
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
+    
+    if updated:
+        print(f"Scores updated successfully in {CSV_FILE}.")
 
 
 if __name__ == '__main__':
@@ -94,7 +130,8 @@ I'm thinking of a number between 1 and 100''')
             if guess==answer:
                 end = time.time()
                 print(f"Congrats you have guessed the number in {turns} turns")
-                print(f"Total time passed:{end-start:.2f} seconds")
+                print(f"Total time passed:{end-start} seconds")
+                update_high_score((end-start), difficulty)
                 break
             
             print(f"Incorrect. You have {chances-turns} more chances")
