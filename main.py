@@ -5,7 +5,8 @@ import csv
 
 #define file name here
 CSV_FILE = 'highscore.csv'
-DIFFICULTY = None
+DIFFICULTY = ''
+ANSWER  = 0
 
 def get_random() -> int:
     """
@@ -23,19 +24,19 @@ def get_choice() -> int:
     global DIFFICULTY
     chances = 0
     while True:
-        print("Please select the difficulty level:\n1. Easy (20 chances)\n2. Medium (15 chances)")
-        print("3. Hard (10 chances))\nyou have 3 hints.use them wisely")
+        print("Please select the difficulty level:\n1. Easy (10 chances)\n2. Medium (5 chances)")
+        print("3. Hard (3 chances))\nyou have 3 hints for all difficulties.use them wisely")
 
         choice = input().lower().strip()
 
         if choice=='1':
-            chances =20
+            chances =10
             DIFFICULTY="easy"
         elif choice=='2':
-            chances =15
+            chances =5
             DIFFICULTY = "medium"
         elif choice=='3':
-            chances =10
+            chances =3
             DIFFICULTY = "hard"
         else:
             pass
@@ -48,24 +49,41 @@ def get_choice() -> int:
 
     return chances
 
-def get_hint(param_guess: int,param_answer: int) -> None:
+def get_system_hint(param_guess: int) -> None:
     """
     Gives the user a text hint based on the proximity of the user's guess with the
     final answer.
     :param param_guess: Integer with the latest guessed value
-    :param param_answer: The value to be correctly guessed
     :return: None
     """
-    diff = param_answer - param_guess
-
-    if 0 < diff <= 20:
-        print(f"you are close,{param_guess} is lesser than answer")
-    elif diff>20:
-        print(f"You are far away,{param_guess} is way lesser than answer")
-    elif 0 > diff >= -20:
-        print(f"you are close,{param_guess} is greater than answer")
+    if param_guess>ANSWER:
+        print(f"{param_guess} is greater than answer")
     else:
-        print(f"You are far away,{param_guess} is way greater than answer")
+        print(f"{param_guess} is lesser than answer")
+
+def get_user_hint(hint_number: int) -> None:
+    """
+    Gives the users hint based on hint count.for first hint - give if number is odd or even
+    For second hint , give the sum of digits , for third hint give the multiplication of digits
+    hint_number : the number of hints that existed when the user called for a hint
+    :return: None
+    """
+
+    if hint_number == 3:
+        if ANSWER % 2 ==0:
+            print("It is an Even number")
+        else:
+            print("It is an Odd number")
+    elif hint_number == 2:
+        sum =0
+        for i in str(ANSWER):
+            sum += int(i)
+        print(f"The sum of the digits is {sum}")
+    else:
+        mult=1
+        for i in str(ANSWER):
+            mult *= int(i)
+        print(f"The multiplication of the digits is {mult}")
 
 def update_high_score(score: float, param_difficulty: str) -> None:
     """
@@ -101,7 +119,7 @@ if __name__ == '__main__':
     while True:
         print('''Welcome to the Number Guessing Game!\nI'm thinking of a whole number between 1 and 100''')
 
-        answer = get_random()
+        ANSWER = get_random()
         no_of_tries = get_choice()
         print("Lets start the game.!Hit H to get a hint")
 
@@ -112,15 +130,10 @@ if __name__ == '__main__':
         while turns<=no_of_tries:
             guess_or_hint = input("Enter your guess:").upper().strip()
             if guess_or_hint=='H':
-
                 if hints>0:
-                    if not guess:
-                        print("Hey!At least guess something first!")
-                    else:
-                        get_hint(guess,answer)
-                        guess = None
-                        hints-=1
-                        print(f"You have {hints} more hints")
+                    get_user_hint(hints)
+                    hints-=1
+                    print(f"You have {hints} more hints")
                 else:
                     print("You have run out of hints")
                 continue
@@ -131,19 +144,19 @@ if __name__ == '__main__':
                 print("Guess is not a whole number")
                 continue
 
-            if guess==answer:
+            if guess==ANSWER:
                 end = time.time()
                 print(f"Congrats you have guessed the number in {turns} turns")
                 print(f"Total time passed:{end-start} seconds")
                 update_high_score((end-start), DIFFICULTY)
                 break
 
-            print(f"Incorrect. You have {no_of_tries-turns} more chances")
+            get_system_hint(guess)
+            print(f"You have {no_of_tries-turns} more chances")
             turns+=1
         else:
-            print(f"{answer} was the correct number")
+            print(f"{ANSWER} was the correct number")
             print("You have run out of chances.Better luck next time")
-
 
         again = input("Enter Y to play again.else quit:").lower().strip()
 
