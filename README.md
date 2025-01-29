@@ -1,8 +1,8 @@
-#Number Guessing Game
+# Number Guessing Game
 
 This is a CLI-based game, so you need to use the command line to interact with the game. The game works as follows:
 
-##How to Play
+## How to Play
 1. The system will generate a random number between 1 and 100.
 2. You will be prompted to select a difficulty level:
    - Easy: 10 chances to guess
@@ -19,7 +19,7 @@ This is a CLI-based game, so you need to use the command line to interact with t
 6. If you win, your time taken to guess the number will be checked against the high score for that difficulty level and updated if it's a new record.
 7. After a game ends, you will have the option to play again or exit.
 
-##Installation and Running the Game
+## Installation and Running the Game
 1. Ensure you have Python installed (version 3.x recommended).
 2. Download the script and save it in a directory of your choice.
 3. Open a terminal and navigate to the directory where the script is saved.
@@ -29,16 +29,16 @@ This is a CLI-based game, so you need to use the command line to interact with t
    ```
    Replace `filename.py` with the actual name of the script.
 
-##High Scores
+## High Scores
 - The game keeps track of the fastest time to guess the number for each difficulty level.
 - Scores are stored in a CSV file (`highscore.csv`).
 - If you beat a previous best time, the score will be updated automatically.
 
-##Requirements
+## Requirements
 - Python 3.x
 - Standard Python libraries (random, time, csv)
 
-##Features
+## Features
 - Multiple difficulty levels
 - Hints system
 - High score tracking
