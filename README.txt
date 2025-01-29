@@ -1,42 +1,47 @@
+# Number Guessing Game
 
-This is a CLI-based game, so you need to use the command line to interact with the game. The game should work as follows:
+This is a CLI-based game, so you need to use the command line to interact with the game. The game works as follows:
 
-The computer will randomly select a number between 1 and 100.
-User should select the difficulty level (easy, medium, hard) which will determine the number of chances they get to guess the number.
-The user should then enters their guess.
-If the user’s guess is correct, the game should display a congratulatory message along with the number of attempts it took to guess the number.
-If the user’s guess is incorrect, the game should display a message indicating whether the number is greater or less than the user’s guess.
-The game should end when the user guesses the correct number or runs out of chances.
-Here is a sample output of the game:
+## How to Play
+1. The system will generate a random number between 1 and 100.
+2. You will be prompted to select a difficulty level:
+   - Easy: 10 chances to guess
+   - Medium: 5 chances to guess
+   - Hard: 3 chances to guess
+3. You can guess a number or type `H` to use a hint. You have a total of 3 hints per game:
+   - Hint 1: Tells whether the number is even or odd.
+   - Hint 2: Provides the sum of the digits of the number.
+   - Hint 3: Provides the multiplication of the digits of the number.
+4. If your guess is incorrect, the system will tell you if your guess is higher or lower than the answer.
+5. The game continues until you:
+   - Guess the correct number (win)
+   - Run out of chances (lose)
+6. If you win, your time taken to guess the number will be checked against the high score for that difficulty level and updated if it's a new record.
+7. After a game ends, you will have the option to play again or exit.
 
-Welcome to the Number Guessing Game!
-I'm thinking of a number between 1 and 100.
-You have 5 chances to guess the correct number.
+## Installation and Running the Game
+1. Ensure you have Python installed (version 3.x recommended).
+2. Download the script and save it in a directory of your choice.
+3. Open a terminal and navigate to the directory where the script is saved.
+4. Run the game by executing:
+   ```sh
+   python filename.py
+   ```
+   Replace `filename.py` with the actual name of the script.
 
-Please select the difficulty level:
-1. Easy (10 chances)
-2. Medium (5 chances)
-3. Hard (3 chances)
+## High Scores
+- The game keeps track of the fastest time to guess the number for each difficulty level.
+- Scores are stored in a CSV file (`highscore.csv`).
+- If you beat a previous best time, the score will be updated automatically.
 
-Enter your choice: 2
+## Requirements
+- Python 3.x
+- Standard Python libraries (random, time, csv)
 
-Great! You have selected the Medium difficulty level.
-Let's start the game!
+## Features
+- Multiple difficulty levels
+- Hints system
+- High score tracking
+- CLI-based interactive gameplay
 
-Enter your guess: 50
-Incorrect! The number is less than 50.
-
-Enter your guess: 25
-Incorrect! The number is greater than 25.
-
-Enter your guess: 35
-Incorrect! The number is less than 35.
-
-Enter your guess: 30
-Congratulations! You guessed the correct number in 4 attempts.
-To make the game more interesting, you can add the following features:
-
-Allow the user to play multiple rounds of the game (i.e., keep playing until the user decides to quit). You can do this by asking the user if they want to play again after each round.
-Add a timer to see how long it takes the user to guess the number.
-Implement a hint system that provides clues to the user if they are stuck.
-Keep track of the user’s high score (i.e., the fewest number of attempts it took to guess the number under a specific difficulty level).
+Enjoy the game and test your guessing skills!
